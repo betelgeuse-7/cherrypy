@@ -1,0 +1,14 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<div class="result">
+    <h2>Your {{length}} characters long random string: </h2>
+    <p class="output">
+        {{output}}
+    </p>
+    <small>8 length is default. You can change it by adding ' ?length={number} ' to url</small>
+</div>
+
+
+{% endblock %}

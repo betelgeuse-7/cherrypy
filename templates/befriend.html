@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<form action='/nice_to_meet_you' method="POST">
+    <p>Want to be friends?</p>
+    <input type='text' name='name' placeholder='Your name' />
+    <input type='submit' value='Yes' />
+</form>
+
+
+{% endblock %}

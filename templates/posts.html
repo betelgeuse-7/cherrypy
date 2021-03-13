@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+
+
+{% block body %}
+
+<div class="post-create">
+    <form action="new_post" method="POST">
+        <h2>Create a post</h2>
+        <input type="text" placeholder="Title" name="title"> <br>
+        <textarea name="text" cols="30" rows="10"></textarea> <br>
+        <input type="date" name='date'>
+        <input type="submit" value="Send" />
+    </form>
+</div>
+<div class="posts">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="post">
+        <h3> {{post.title}} </h3>
+        <p> {{post.text}} </p>
+        <small>At {{post.date}} </small>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p>No posts</p>
+    {% endif %}
+</div>
+
+{% endblock %}
