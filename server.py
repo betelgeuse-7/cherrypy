@@ -49,7 +49,7 @@ class HelloWorld(object):
     
     @cherrypy.expose
     def register(self, username=None, password=None, password2=None):
-        if not username.isspace() and not password.isspace() and not password2.isspace():
+        if username and password and password2 and not username.isspace() and not password.isspace() and not password2.isspace():
             if password == password2:
                 hashed_pwd = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
                 db.cursor.execute("INSERT INTO users VALUES(?, ?)", (username, hashed_pwd))
