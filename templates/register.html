@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Register</title>
+{% endblock %}
+
+
+{% block body %}
+
+<form action="" method="POST">
+    <h2>Register</h2>
+    <label for="username">Username: </label>
+    <input type="text" id='username' name='username'>
+
+    <label for="password">Password: </label>
+    <input type="password" id='password' name='password'>
+
+    <label for="password2">Password: </label>
+    <input type="password" id='password2' name='password2'>
+
+    <input type="submit" value='Register'>
+    {% if err %}
+    <p style="color: rgb(236, 43, 43)">{{err}}</p>
+    {% endif %}
+</form>
+
+{% endblock %}

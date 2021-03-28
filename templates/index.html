@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}
     <title>CherryPy Index</title>
+    <link rel="stylesheet" href="../static/default.css">
+    {% endblock %}
 </head>
 
 {% block body %}
@@ -18,6 +21,9 @@
         <small><a href="/generate?length=8">Generate random string</a></small>
         <small><a href="/befriend">Want to be my friend?</a></small>
         <small><a href="/posts">Posts</a></small>
+        <small><a href="/register">Register</a></small>
+        <small><a href="/login">Login</a></small>
+
     </div>
 </body>
 

@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>Login</title>
+{% endblock %}
+
+
+{% block body %}
+
+<form action="" method="POST">
+    <h2>Login</h2>
+    <label for="username">Username: </label>
+    <input type="text" id='username' name='username'>
+
+    <label for="password">Password: </label>
+    <input type="password" id='password' name='password'>
+
+
+    <input type="submit" value='Register'>
+    {% if msg %}
+    <p style="color: rgb(109, 243, 75)">{{msg}}</p>
+    {% endif %}
+</form>
+
+{% endblock %}

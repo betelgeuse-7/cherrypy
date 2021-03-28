@@ -2,7 +2,7 @@ from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('templates'))
 
-def render_template(html, obj):
+def render_template(html, obj={}):
     """ 
     takes 2 args: a '.html' file under templates folder and 
     a python dictionary corresponding to the 
