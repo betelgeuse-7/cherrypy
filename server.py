@@ -49,6 +49,7 @@ class HelloWorld(object):
     
     @cherrypy.expose
     def register(self, username=None, password=None, password2=None):
+        #TODO form validation middleware.
         if username and password and password2 and not username.isspace() and not password.isspace() and not password2.isspace():
             if password == password2:
                 hashed_pwd = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
