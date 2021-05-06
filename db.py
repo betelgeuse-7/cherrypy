@@ -1,20 +1,15 @@
-import sqlite3
+import os
+import psycopg2
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class DBConnection:
-    def __init__(self, sqlite_db):
-        #check_same_thread=False
-        #to avoid SQLite objects created in a thread can only be used in that same thread.
-        self.con = sqlite3.connect(sqlite_db, check_same_thread=False)
+    def __init__(self):
+        POSTGRES_CONN = os.getenv('POSTGRES_CONNECTION_STRING')
+        self.con = psycopg2.connect(POSTGRES_CONN)
         self.cursor = self.con.cursor()
-        self.dbname = sqlite_db
+        self.dbname = POSTGRES_CONN.split("/")[-1].split("?")[0]
 
     def __repr__(self):
-        return f"SQLITE_DB_CONN_TO : {self.dbname}"
-    
-    def select(self, column, table):
-        self.cursor.execute(f"SELECT {column} FROM {table};")
-
-    def select_all(self, table):
-        self.cursor.execute(f"SELECT * FROM {table};")
-    
-
+        return f"POSTGRES_CONN : {self.dbname}"

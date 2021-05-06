@@ -1,19 +1,21 @@
 import cherrypy, random, string
+from cherrypy._cprequest import Request
+from auth import is_authenticated
 import os.path
 from render_template import render_template
 from db import DBConnection
 import bcrypt
 
 reactions = {
-    #"shocked_pikachu_face" : "https://i.kym-cdn.com/entries/icons/original/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.png",
+    "shocked_pikachu_face" : "https://i.kym-cdn.com/entries/icons/original/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.png",
     "sad_cat": "https://i.kym-cdn.com/entries/icons/original/000/026/489/crying.jpg"
 }
 
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-db = DBConnection('cherryDb.sqlite3')
+db = DBConnection()
 
-class HelloWorld(object):
+class CherryPostApp(object):
     @cherrypy.expose
     def index(self):
         return render_template("index.html")
@@ -42,8 +44,25 @@ class HelloWorld(object):
 
     @cherrypy.expose
     def posts(self):
+        try:
+            if is_authenticated(Request):
+                db.cursor.execute("select p.title, p.content, u.username from posts p inner join users u on p.author = u.user_id")
+                posts = db.cursor.fetchall()
+                context = {
+                    "posts": posts
+                }
+                return render_template("posts.html", context)
+            else:
+                return f"<p>Not authenticated</p>"
+        except Exception as e:
+            return f"<p>{e}</p>"
+
+    """
+    @cherrypy.expose
+    def posts(self):
+        db.cursor.execute("SELECT * FROM posts")
         context = {
-            "posts": db.select_all('posts')
+            "posts": db.cursor.fetchall()
         }
         return render_template('posts.html', context)
     
@@ -64,18 +83,31 @@ class HelloWorld(object):
     
     @cherrypy.expose
     def login(self, username=None, password=None):
-        """
-            Auth middleware here. TODO
-        """
+            #Auth middleware here. TODO
         return render_template('login.html')
+    
+    @cherrypy.expose
+    def new_post(self, title=None, text=None, author=None):
+        if title and text and author:
+            try:
+                db.cursor.execute("INSERT INTO posts VALUES (?, ?, ?)", (title, text, author))
+                db.con.commit
+                return self.posts()
+            except Exception as e:
+                print(e)
+                return render_template("new_post.html", {
+                    "err": "An error occured. Try again",
+                    "pic": reactions["shocked_pikachu_face"]
+                })
+        return render_template("new_post.html")
 
 
-
+"""
 
 if __name__ == '__main__':
-    cherrypy.quickstart(HelloWorld(), config= {
+    cherrypy.quickstart(CherryPostApp(), config = {
         '/static': {
             "tools.staticdir.on":True,
             "tools.staticdir.dir":f"{current_dir}/static/"
-        }
+        },
     })

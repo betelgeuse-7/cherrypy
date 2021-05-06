@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+
+{% block title %}
+<title>New post</title>
+<link rel="stylesheet" href="../static/default.css">
+{% endblock %}
+
+{% block body %}
+
+{% if err and pic %}
+<p style="color: #d6545a;">{{err}}</p>
+<img src={{pic}} alt="shock!" width="200" height="200">
+{% endif %}
+
+<form action="" method="POST">
+    <h2>Make a post</h2>
+    <input type="text" name="title" placeholder="Title">
+    <textarea name="text" id="" cols="30" rows="10">Your text</textarea>
+    <input type="number" name="author" placeholder="Author ID">
+    <input type="submit" id="post-submit-btn">
+</form>
+
+{% endblock %}
